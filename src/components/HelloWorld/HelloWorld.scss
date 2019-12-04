@@ -1,14 +1,19 @@
-h3 {
-    margin: 40px 0 0;
+.parent {
+  border: 2px solid #dfa612;
+  height: 4rem;
+  display: flex;
+  justify-content: space-between;
+  color: black;
+  margin-bottom: 10px;
+  font-weight: bold;
+
+  .draggable {
+    background-color: teal;
+    padding: 10px;
   }
-  ul {
-    list-style-type: none;
-    padding: 0;
+
+  .dropzone {
+    background-color: greenyellow;
+    padding: 10px;
   }
-  li {
-    display: inline-block;
-    margin: 0 10px;
-  }
-  a {
-    color: #42b983;
-  }
+}
