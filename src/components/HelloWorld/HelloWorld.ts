@@ -6,40 +6,36 @@ export default class HelloWorld extends Vue {
 
   onDragStart = (event: any) => {
     console.log("is is the on drag start");
-    event
-    .dataTransfer
-    .setData('text/plain', event.target.id);
-  }
+    event.dataTransfer.setData("text/plain", event.target.id);
+  };
 
   onDragOver = (event: any) => {
     console.log("is int the drag over");
     event.preventDefault();
-  }
+  };
 
-  onDrop = (event: any) => {
+  onDrop = async (event: any) => {
+    event.preventDefault();
     console.log("is int the onDrop");
-    const id = event
-      .dataTransfer
-      .getData('text');
 
+    const id = event.dataTransfer.getData("text");
     const draggableElement = document.getElementById(id);
     const dropzone = event.target;
 
-    dropzone.appendChild(draggableElement);
+    var sourceClass = draggableElement!.className;
+    var targetId = dropzone.id;
+    var newNode = draggableElement!.cloneNode(true);
+    var newEle = <HTMLElement>newNode;
+    var elementsOfSameType = document
+      .getElementById(targetId)!
+      .getElementsByClassName(sourceClass);
 
-    event
-      .dataTransfer
-      .clearData();
-  }
+    console.log(`${sourceClass}`);
+    newEle.id = `${newEle.id}_${elementsOfSameType.length + 1}`;
+    newEle.addEventListener("dragstart", this.onDragStart);
 
-  // onDragStart(event) {
-  //   event
-  //     .dataTransfer
-  //     .setData('text/plain', event.target.id);
+    dropzone.appendChild(newEle);
 
-  //   event
-  //     .currentTarget
-  //     .style
-  //     .backgroundColor = 'yellow';
-  // }
+    event.dataTransfer.clearData();
+  };
 }
