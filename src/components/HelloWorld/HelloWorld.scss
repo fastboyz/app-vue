@@ -7,6 +7,11 @@
   margin-bottom: 10px;
   font-weight: bold;
 
+  .itemzone {
+    background-color: red;
+    padding: 10px;
+  }
+  
   .draggable {
     background-color: teal;
     padding: 10px;
@@ -16,4 +21,6 @@
     background-color: greenyellow;
     padding: 10px;
   }
+
+  
 }
