@@ -3,6 +3,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 @Component
 export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
+  private lstAdded: Array<string> = [];
 
   onDragStart = (event: any) => {
     console.log("is is the on drag start");
@@ -14,7 +15,7 @@ export default class HelloWorld extends Vue {
     event.preventDefault();
   };
 
-  onDrop = async (event: any) => {
+  onDropInDropZone = (event: any) => {
     event.preventDefault();
     console.log("is int the onDrop");
 
@@ -30,12 +31,35 @@ export default class HelloWorld extends Vue {
       .getElementById(targetId)!
       .getElementsByClassName(sourceClass);
 
-    console.log(`${sourceClass}`);
     newEle.id = `${newEle.id}_${elementsOfSameType.length + 1}`;
     newEle.addEventListener("dragstart", this.onDragStart);
 
-    dropzone.appendChild(newEle);
+    if (
+      draggableElement!.parentElement!.id !== dropzone.parentElement.id &&
+      draggableElement!.parentElement!.id != dropzone.id
+    ) {
+      dropzone.appendChild(newEle);
+      this.lstAdded.push(newEle.id);
+      console.log(this.lstAdded);
+    }
 
     event.dataTransfer.clearData();
   };
+
+  onDropInItemZone = (event: DragEvent) => {
+    event.preventDefault();
+    const id = event.dataTransfer!.getData("text");
+    const element = document.getElementById(id);
+    this.lstAdded = this.removeFromArray(this.lstAdded, id);
+    element!.parentNode!.removeChild(<Node>element);
+    console.log(this.lstAdded);
+  };
+
+  private removeFromArray(array: Array<any>, element: any): Array<any> {
+    var index = array.indexOf(element);
+    if (index > -1) {
+      array.splice(index, 1);
+    }
+    return array;
+  }
 }

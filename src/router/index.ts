@@ -1,7 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import POC from '../views/POC.vue';
 
 Vue.use(VueRouter);
 
